@@ -2,7 +2,7 @@ import { galleryItems } from './gallery-items.js';
 
 const galleryEl = document.querySelector('div.gallery');
 makeGalleryMarkup();
-galleryEl.addEventListener('click', onBasicLightboxToggle);
+galleryEl.addEventListener('click', onBasicLightboxOpen);
 
 function makeGalleryMarkup() {
     const markup = galleryItems
@@ -18,7 +18,7 @@ function makeGalleryMarkup() {
     galleryEl.innerHTML = markup;
 };
 
-function onBasicLightboxToggle(evt) {
+function onBasicLightboxOpen(evt) {
     if (evt.target.nodeName !== 'IMG') {
         return;
     };
@@ -26,11 +26,9 @@ function onBasicLightboxToggle(evt) {
     evt.preventDefault();
 
     const modalBigImg = basicLightbox
-        .create(`
-            <img src="${evt.target.dataset.source}" alt="${evt.target.alt}">
-        `);
+        .create(`<img src="${evt.target.dataset.source}" alt="${evt.target.alt}">`);
     
-    modalBigImg.show(); 
+    modalBigImg.show();
 
     window.addEventListener('keydown', evt => {
         if (evt.code === 'Escape' && modalBigImg.visible()) {
