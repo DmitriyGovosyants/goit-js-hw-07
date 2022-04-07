@@ -15,5 +15,4 @@ function makeGalleryMarkup() {
 
     galleryEl.innerHTML = markup;
 };
-// авіаів
 
