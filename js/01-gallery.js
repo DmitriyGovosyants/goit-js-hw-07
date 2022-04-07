@@ -1,22 +1,8 @@
 import { galleryItems } from './gallery-items.js';
-// Change code below this line
+
 const galleryEl = document.querySelector('div.gallery');
-
-galleryEl.addEventListener('click', onBigImgOpen);
-
-function onBigImgOpen(evt) {
-    if (evt.target.nodeName !== 'IMG') {
-        return;
-    }
-
-    evt.preventDefault();
-
-    basicLightbox
-        .create(`
-            <img src="${evt.target.dataset.source}" alt="${evt.target.alt}">
-        `)
-        .show();
-};
+makeGalleryMarkup();
+galleryEl.addEventListener('click', onBasicLightboxToggle);
 
 function makeGalleryMarkup() {
     const markup = galleryItems
@@ -32,4 +18,23 @@ function makeGalleryMarkup() {
     galleryEl.innerHTML = markup;
 };
 
-makeGalleryMarkup();
+function onBasicLightboxToggle(evt) {
+    if (evt.target.nodeName !== 'IMG') {
+        return;
+    };
+
+    evt.preventDefault();
+
+    const modalBigImg = basicLightbox
+        .create(`
+            <img src="${evt.target.dataset.source}" alt="${evt.target.alt}">
+        `);
+    
+    modalBigImg.show(); 
+
+    window.addEventListener('keydown', evt => {
+        if (evt.code === 'Escape' && modalBigImg.visible()) {
+            modalBigImg.close();
+        }
+    });
+};
